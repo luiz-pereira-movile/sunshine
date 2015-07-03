@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.movile.sunshine.R;
@@ -25,6 +27,19 @@ public class MainActivity extends Activity {
 
         weatherServices = DaggerServices.builder().build().weatherServices();
 
+        ((Button) findViewById(R.id.refresh)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateWeather();
+            }
+        });
+
+        updateWeather();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         updateWeather();
     }
 
