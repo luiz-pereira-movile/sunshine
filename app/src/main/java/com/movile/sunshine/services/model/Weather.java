@@ -11,6 +11,8 @@ public class Weather {
 
     private Double temperature;
 
+    private Double windSpeed;
+
     public String getCity() {
         return city;
     }
@@ -33,5 +35,13 @@ public class Weather {
 
     public void setTemperature(Double temperature) {
         this.temperature = temperature;
+    }
+
+    public Double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(Double windSpeed) {
+        this.windSpeed = windSpeed;
     }
 }

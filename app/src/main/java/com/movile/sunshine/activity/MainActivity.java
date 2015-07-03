@@ -1,21 +1,51 @@
 package com.movile.sunshine.activity;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.movile.sunshine.R;
+import com.movile.sunshine.component.DaggerServices;
+import com.movile.sunshine.services.WeatherServices;
+import com.movile.sunshine.services.model.Weather;
 
+import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+
+    private WeatherServices weatherServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        weatherServices = DaggerServices.builder().build().weatherServices();
 
+        updateWeather();
+    }
+
+    private void updateWeather() {
+        Weather weather = null;
+        try {
+            weather = new AsyncTask<String, Void, Weather>() {
+                @Override
+                protected Weather doInBackground(String... city) {
+                    return weatherServices.getCurrentWeather(city[0]);
+                }
+
+            }.execute("Campinas,BR").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        String weatherText = weather.getCity() + ", " + weather.getCountry() + ": " + weather.getTemperature() + " C";
+        ((TextView) findViewById(R.id.weather)).setText(weatherText);
     }
 
     @Override
