@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 
         weatherServices = DaggerServices.builder().build().weatherServices();
 
-        ((Button) findViewById(R.id.refresh)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateWeather();
@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     }
 
     private void updateWeather() {
-        
+
         new AsyncTask<String, Void, Weather>() {
             @Override
             protected Weather doInBackground(String... city) {
