@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.movile.sunshine.R;
 import com.movile.sunshine.component.DaggerServices;
 import com.movile.sunshine.services.WeatherServices;
 import com.movile.sunshine.services.model.Weather;
-
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
 
@@ -46,6 +43,12 @@ public class MainActivity extends Activity {
     private void updateWeather() {
 
         new AsyncTask<String, Void, Weather>() {
+
+            @Override
+            protected void onPreExecute() {
+                findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            }
+
             @Override
             protected Weather doInBackground(String... city) {
                 return weatherServices.getCurrentWeather(city[0]);
@@ -55,6 +58,7 @@ public class MainActivity extends Activity {
             protected void onPostExecute(Weather weather) {
                 String weatherText = weather.getCity() + ", " + weather.getCountry() + ": " + weather.getTemperature() + " C";
                 ((TextView) findViewById(R.id.weather)).setText(weatherText);
+                findViewById(R.id.loading).setVisibility(View.INVISIBLE);
             }
         }.execute("Campinas,BR");
 
