@@ -44,23 +44,20 @@ public class MainActivity extends Activity {
     }
 
     private void updateWeather() {
-        Weather weather = null;
-        try {
-            weather = new AsyncTask<String, Void, Weather>() {
-                @Override
-                protected Weather doInBackground(String... city) {
-                    return weatherServices.getCurrentWeather(city[0]);
-                }
+        
+        new AsyncTask<String, Void, Weather>() {
+            @Override
+            protected Weather doInBackground(String... city) {
+                return weatherServices.getCurrentWeather(city[0]);
+            }
 
-            }.execute("Campinas,BR").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+            @Override
+            protected void onPostExecute(Weather weather) {
+                String weatherText = weather.getCity() + ", " + weather.getCountry() + ": " + weather.getTemperature() + " C";
+                ((TextView) findViewById(R.id.weather)).setText(weatherText);
+            }
+        }.execute("Campinas,BR");
 
-        String weatherText = weather.getCity() + ", " + weather.getCountry() + ": " + weather.getTemperature() + " C";
-        ((TextView) findViewById(R.id.weather)).setText(weatherText);
     }
 
     @Override
