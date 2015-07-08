@@ -14,7 +14,8 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:title="Sunshine"
-            android:fitsSystemWindows="true"/>
+            android:fitsSystemWindows="true"
+            android:background="@color/colorPrimary"/>
 
         <ProgressBar
             android:id="@+id/loading"
