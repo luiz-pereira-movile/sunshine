@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion 22
@@ -19,10 +20,41 @@ android {
         }
         debug {
             debuggable true
+            testCoverageEnabled true
         }
     }
     lintOptions {
         abortOnError false // ignoring some references from dagger-compiler
+    }
+}
+
+apply plugin: 'jacoco'
+jacoco {
+    toolVersion = "0.7.5.201505241946"
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebug']) {
+    description = "Generates Jacoco coverage reports: XML and HTML"
+    group = "Reporting"
+
+    sourceDirectories = files(["src/main/java", "src/test/java"])
+
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*',
+                       '**/*Activity*.*',
+                       '**/*Fragment*.*'
+            ]
+    )
+    executionData = fileTree(dir: 'build/jacoco', includes: ["*.exec"])
+
+    reports {
+        xml.enabled = true
+        csv.enabled false
+        html.enabled = true
     }
 }
 

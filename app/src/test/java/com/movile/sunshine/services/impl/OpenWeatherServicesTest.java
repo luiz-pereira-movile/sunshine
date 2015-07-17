@@ -16,7 +16,7 @@ public class OpenWeatherServicesTest {
         OpenWeatherServices openWeatherservices = (OpenWeatherServices) DaggerServices.builder()
                 .build().weatherServices();
 
-        Weather weather = openWeatherservices.getCurrentWeather("Campinas,br");
+        Weather weather = openWeatherservices.getCurrentWeather("campinas,br");
         assertEquals("Campinas", weather.getCity());
         assertEquals("BR", weather.getCountry());
         assertNotNull(weather.getTemperature());
