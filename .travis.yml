@@ -1,6 +1,8 @@
 language: android
 jdk: oraclejdk7
 env:
+  global:
+    - COVERALLS_REPO_TOKEN=4CR398SQOtypPILwF7fgKUjG3LYy15i3D
   matrix:
     - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
 
@@ -16,7 +18,4 @@ android:
 before_install:
  - chmod +x gradlew
 
-script: ./gradlew jacocoTestReport
-
-after_success:
-  - coveralls
+script: ./gradlew jacocoTestReport coveralls
