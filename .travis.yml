@@ -16,8 +16,4 @@ android:
 before_install:
  - chmod +x gradlew
 
-script: ./gradlew jacocoTestReport
-
-after_success:
-  - coveralls
-
+script: ./gradlew jacocoTestReport coveralls
