@@ -34,7 +34,7 @@ jacoco {
 }
 
 coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebug']) {
