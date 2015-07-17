@@ -33,6 +33,10 @@ jacoco {
     toolVersion = "0.7.5.201505241946"
 }
 
+coveralls {
+    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+}
+
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebug']) {
     description = "Generates Jacoco coverage reports: XML and HTML"
     group = "Reporting"
